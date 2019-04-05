@@ -1,11 +1,23 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import Post
-from .forms import PostForm
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
 
+from .models import Post
+from .forms import PostForm
+
 def posts_list(request):
-    queryset = Post.objects.all()
+    queryset_list = Post.objects.all().order_by("-timestamp")
+    paginator = Paginator(queryset_list, 5)
+    page = request.GET.get('page')
+
+    try:
+        queryset = paginator.page(page)
+    except PageNotAnInteger:
+        queryset = paginator.page(1)
+    except EmptyPage:
+        queryset = paginator.page(paginator.num_pages)
+
     context = {
         "title": "List",
         "object_list": queryset
