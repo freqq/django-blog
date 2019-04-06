@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
 from django.utils import timezone
+from django.db.models import Q
 
 from .models import Post
 from .forms import PostForm
@@ -12,9 +13,14 @@ def posts_list(request):
     queryset_list = Post.objects.active().order_by("-timestamp")
     if request.user.is_staff or request.user.is_superuser:
         queryset_list = Post.objects.all().order_by("-timestamp")
+
+    query = request.GET.get("q")
+    if query:
+        queryset_list = queryset_list.filter(Q(title__icontains=query) | Q(content__icontains=query) | Q(user__username__icontains=query)).distinct()
+
     paginator = Paginator(queryset_list, 5)
     page = request.GET.get('page')
-
+    page_request_var = "page"
     try:
         queryset = paginator.page(page)
     except PageNotAnInteger:
@@ -24,10 +30,12 @@ def posts_list(request):
 
     context = {
         "title": "List",
+        "page_request_var": page_request_var,
         "object_list": queryset,
         "today": today
     }
     return render(request, "post_list.html", context)
+
 
 def post_detail(request, slug=None):
     instance = get_object_or_404(Post, slug=slug)
@@ -39,6 +47,7 @@ def post_detail(request, slug=None):
         "instance": instance
     }
     return render(request, "post_detail.html", context)
+
 
 def post_create(request):
     if not request.user.is_staff or request.user.is_superuser:
