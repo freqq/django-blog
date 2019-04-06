@@ -34,6 +34,7 @@
                                     src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
                                     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
                                     crossorigin="anonymous"></script>
+                                <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.6.2/marked.min.js"></script>
                                 <script
                                     src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
                                     integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
@@ -49,5 +50,16 @@
                                     defer
                                     crossorigin="anonymous"
                                     src="https://connect.facebook.net/pl_PL/sdk.js#xfbml=1&version=v3.2"></script>
+                                <script type="text/javascript">
+                                    $(document)
+                                        .ready(function () {
+                                            $(".content-markdown")
+                                                .each(function () {
+                                                    var content = $(this).text()
+                                                    var markedContent = marked(content)
+                                                    $(this).html(markedContent)
+                                                })
+                                        })
+                                </script>
                             </body>
                         </html>
