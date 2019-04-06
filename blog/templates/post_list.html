@@ -23,7 +23,7 @@
                                 <a href="{{ obj.get_absolute_url }}">{{obj.title}}</a>
                                 <small>{{obj.timestamp|timesince}}</small>
                             </h3>
-                            <p>{{obj.content|linebreaks|truncatechars:120}}</p>
+                            <p class="content-markdown">{{obj.content|truncatechars:120}}</p>
                             <p class="card-text">
                                 <a href="{{ obj.get_absolute_url }}" class="btn btn-primary" role="button">View</a>
                             </p>
