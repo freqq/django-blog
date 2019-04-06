@@ -29,7 +29,7 @@ def posts_list(request):
         queryset = paginator.page(paginator.num_pages)
 
     context = {
-        "title": "List",
+        "title": "przemek.com",
         "page_request_var": page_request_var,
         "object_list": queryset,
         "today": today

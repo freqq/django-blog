@@ -1,12 +1,21 @@
 {% extends "base.html" %}
 {% block content %}
 
-    <div class="col-sm-8 col-sm-offset-2">
-        <h1>{{title}}</h1>
+    <div class="col-sm-8 offset-sm-2">
+        <h1 class="text-center">{{title}}</h1>
 
         <form method="GET" action="">
-            <input type="text" name="q" placeholder="Share posts..." value="{{request.GET.q}}" />
-            <input type="submit" value="Search" />
+            <div class="input-group mb-4">
+                <input
+                    class="form-control"
+                    type="text"
+                    name="q"
+                    placeholder="Share posts..."
+                    value="{{request.GET.q}}"/>
+                <span class="input-group-btn">
+                    <input class="btn btn-primary" type="submit" value="Search"/>
+                </span>
+            </div>
         </form>
 
         {% for obj in object_list %}
@@ -15,13 +24,19 @@
                     <div class="card">
                         <div class="card-body post-detail-item">
                             {% if obj.image %}
-                            <img src="{{obj.image.url}}" class="img-fluid" />
+                                <img src="{{obj.image.url}}" class="img-fluid"/>
                             {% endif %}
                             <h3 class="card-title">
-                                {% if obj.draft %}<h6 style="color: red;">Draft</h6> {% endif %}
-                                {% if obj.publish > today %} <h6>Future Post</h6> {% endif %}
-                                <a href="{{ obj.get_absolute_url }}">{{obj.title}}</a>
-                                <small>{{obj.timestamp|timesince}}</small>
+                                {% if obj.draft %}
+                                    <small style="color: red;">Draft</small>
+                                {% endif %}
+                                {% if obj.publish > today %}
+                                    <small>Future Post</small>
+                                {% endif %}
+                                <p>
+                                    <a href="{{ obj.get_absolute_url }}">{{obj.title}}</a> |
+                                    <small>{{obj.timestamp|timesince}}</small>
+                                </p>
                             </h3>
                             <p>{{obj.get_markdown|truncatewords_html:9}}</p>
                             <p class="card-text">
@@ -38,15 +53,20 @@
         <div class="pagination">
             <span class="step-links">
                 {% if object_list.has_previous %}
-                    <a href="?page={{object_list.previous_page_number}}{% if request.GET.q %}&q={{request.GET.q}}{% endif %}">previous</a>
+                    <a
+                        href="?page={{object_list.previous_page_number}}{% if request.GET.q %}&q={{request.GET.q}}{% endif %}">previous</a>
                 {% endif %}
 
                 <span class="current">
-                    Page {{object_list.number}} of {{object_list.paginator.num_pages }}
+                    Page
+                    {{object_list.number}}
+                    of
+                    {{object_list.paginator.num_pages }}
                 </span>
 
                 {% if object_list.has_next %}
-                    <a href="?page={{object_list.next_page_number}}{% if request.GET.q %}&q={{request.GET.q}}{% endif %}">next</a>
+                    <a
+                        href="?page={{object_list.next_page_number}}{% if request.GET.q %}&q={{request.GET.q}}{% endif %}">next</a>
                 {% endif %}
             </span>
         </div>
