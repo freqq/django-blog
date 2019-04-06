@@ -8,6 +8,9 @@
                 <div class="col-sm-12">
                     <div class="card">
                         <div class="card-body">
+                            {% if obj.image %}
+                            <img src="{{obj.image.url}}" class="img-fluid" />
+                            {% endif %}
                             <h3 class="card-title">
                                 <a href="{{ obj.get_absolute_url }}">{{obj.title}}</a>
                                 <small>{{obj.timestamp|timesince}}</small>
