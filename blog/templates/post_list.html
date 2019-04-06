@@ -12,6 +12,8 @@
                             <img src="{{obj.image.url}}" class="img-fluid" />
                             {% endif %}
                             <h3 class="card-title">
+                                {% if obj.draft %}<h6 style="color: red;">Draft</h6> {% endif %}
+                                {% if obj.publish > today %} <h6>Future Post</h6> {% endif %}
                                 <a href="{{ obj.get_absolute_url }}">{{obj.title}}</a>
                                 <small>{{obj.timestamp|timesince}}</small>
                             </h3>

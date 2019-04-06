@@ -1,10 +1,31 @@
 {% extends "base.html" %}
-{% block head_title %} {{instance.title}} | {{block.super}} {% endblock head_title %}
+{% block head_title %}
+    {{instance.title}}
+    |
+    {{block.super}}
+{% endblock head_title %}
 {% block content %}
 
-<div class="col-sm-6 col-sm-offset-3">
-    <img src="{{instance.image.url}}" class="img-responsive" />
-    <h1>{{title}} <small>{{instance.timestamp}}</small></h1>
-    {{instance.content}}
-</div>
+    <div class="col-sm-12">
+        <img src="{{instance.image.url}}" class="img-responsive"/>
+        <h1>{{title}}
+            <small>{% if instance.draft %} <span style="color:red;">Draft</span> {% endif %} {{instance.publish}}</small>
+        </h1>
+        <p>Author:
+            {{instance.user}}</p>
+        <div
+            class="fb-like"
+            data-href="https://developers.facebook.com/docs/plugins/"
+            data-layout="button_count"
+            data-action="like"
+            data-size="small"
+            data-show-faces="true"
+            data-share="true"></div>
+        <p>{{instance.content}}</p>
+
+        <div
+            class="fb-comments"
+            data-href="https://developers.facebook.com/docs/plugins/comments#configurator"
+            data-numposts="5"></div>
+    </div>
 {% endblock content %}
