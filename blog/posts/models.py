@@ -4,6 +4,8 @@ from django.db.models.signals import pre_save
 from django.utils.text import slugify
 from django.conf import settings
 from django.utils import timezone
+from markdown_deux import markdown
+from django.utils.safestring import mark_safe
 
 # Create your models here.
 
@@ -37,6 +39,14 @@ class Post(models.Model):
     
     def get_absolute_url(self):
         return reverse('detail', args=[str(self.slug)])
+
+    def get_markdown(self):
+        return mark_safe(markdown(self.content))
+
+
+
+
+
 
 def create_slug(instance, new_slug=None):
     slug = slugify(instance.title)

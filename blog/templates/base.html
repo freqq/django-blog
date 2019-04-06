@@ -63,6 +63,41 @@
                         var markedContent = marked(content)
                         $(this).html(markedContent)
                     })
+                $(".post-detail-item img")
+                    .each(function () {
+                        $(this).addClass("img-fluid")
+                    })
+
+                var titleItem = $("#id_title")
+                $("#preview-title").text(titleItem.val())
+
+                var contentItem = $("#id_content")
+                $("#preview-content").html(marked(contentItem.val()))
+
+                function setContent(value){
+                    var markedContent = marked(value)
+                    $("#preview-content").html(markedContent)
+                    $("#preview-content img").each(function(){
+                        $(this).addClass("img-fluid")
+                    })
+                }
+                setContent(contentItem.val())
+
+                contentItem.keyup(function(){
+                    var newContent = $(this).val()
+                    setContent(newContent)
+                })
+
+                function setTitle(value){
+                    $("#preview-title").text(value)
+                }
+
+                setTitle(titleItem.val())
+
+                titleItem.keyup(function(){
+                    var newTitle = $(this).val()
+                    setTitle(newTitle)
+                })
             })
     </script>
 </body>

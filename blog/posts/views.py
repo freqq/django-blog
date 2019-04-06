@@ -54,7 +54,7 @@ def post_create(request):
         raise Http404
 
     #if not request.user.is_authenticated():
-    #    raise Http404
+    #   raise Http404
 
     form = PostForm(request.POST or None, request.FILES or None)
     if form.is_valid():

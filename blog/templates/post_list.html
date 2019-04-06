@@ -13,7 +13,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-body post-detail-item">
                             {% if obj.image %}
                             <img src="{{obj.image.url}}" class="img-fluid" />
                             {% endif %}
@@ -23,7 +23,7 @@
                                 <a href="{{ obj.get_absolute_url }}">{{obj.title}}</a>
                                 <small>{{obj.timestamp|timesince}}</small>
                             </h3>
-                            <p class="content-markdown">{{obj.content|truncatechars:120}}</p>
+                            <p>{{obj.get_markdown|truncatewords_html:9}}</p>
                             <p class="card-text">
                                 <a href="{{ obj.get_absolute_url }}" class="btn btn-primary" role="button">View</a>
                             </p>
