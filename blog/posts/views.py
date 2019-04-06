@@ -40,7 +40,7 @@ def posts_list(request):
 def post_detail(request, slug=None):
     instance = get_object_or_404(Post, slug=slug)
     if instance.draft or instance.publish > timezone.now().date():
-        if not request.user.is_staff or request.user.is_superuser:
+        if not request.user.is_staff or not request.user.is_superuser:
             raise Http404
     context = {
         "title": instance.title,
@@ -50,7 +50,7 @@ def post_detail(request, slug=None):
 
 
 def post_create(request):
-    if not request.user.is_staff or request.user.is_superuser:
+    if not request.user.is_staff or not request.user.is_superuser:
         raise Http404
 
     if not request.user.is_authenticated():
@@ -70,7 +70,7 @@ def post_create(request):
     return render(request, "post_form.html", context)
 
 def post_update(request, slug=None):
-    if not request.user.is_staff or request.user.is_superuser:
+    if not request.user.is_staff or not request.user.is_superuser:
         raise Http404
 
     instance = get_object_or_404(Post, slug=slug)
