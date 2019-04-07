@@ -23,9 +23,18 @@
             data-share="true"></div>
         <p class="post-detail-item">{{instance.get_markdown}}</p>
 
-        <div
-            class="fb-comments"
-            data-href="https://developers.facebook.com/docs/plugins/comments#configurator"
-            data-numposts="5"></div>
+       <br />
+       <br />
+       <div>
+           <p class="lead">Comments</p>
+           {% for comment in comments %}
+                <div class="">
+                    {{comment.content}}
+                    <br />
+                    <small>via {{comment.user}} | {{comment.timestamp|timesince}}</small>
+                    <hr />
+                </div>
+           {% endfor %}
+       </div>
     </div>
 {% endblock content %}
