@@ -7,6 +7,7 @@ from django.db.models import Q
 from comments.models import Comment
 from comments.forms import CommentForm
 from django.contrib.contenttypes.models import ContentType
+from .utils import get_read_time
 
 from .models import Post
 from .forms import PostForm

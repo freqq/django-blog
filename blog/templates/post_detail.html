@@ -8,7 +8,9 @@
 {% block content %}
 
     <div class="col-sm-12">
+        {% if instance.image %}
         <img src="{{instance.image.url}}" class="img-responsive"/>
+        {% endif %}
         <h1>{{title}}
             <small>
                 {% if instance.draft %}
@@ -16,6 +18,7 @@
                 {% endif %}
                 {{instance.publish}}</small>
         </h1>
+        <p>Read time : {% if instance.read_time <= 1 %} < 1 minute {% else %} {{instance.read_time}} minutes {% endif %}</p>
         <p>Author:
             {{instance.user}}</p>
         <div
@@ -48,7 +51,7 @@
                         |
                         {{comment.timestamp|timesince}}
                         ago
-                        {% if comment.children.count > 0 %} | {{comment.children.count}} comment {%if comment.children.count > 1 %}s{% endif %} {% endif %} 
+                        {% if comment.children.count > 0 %} | {{comment.children.count}} comment{%if comment.children.count > 1 %}s{% endif %} {% endif %} 
                         | <a class="comment-reply-btn" href="#">Reply</a>
                     </footer>
 
