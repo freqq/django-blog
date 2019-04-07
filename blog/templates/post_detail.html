@@ -33,9 +33,10 @@
         <div>
             <p class="lead">Comments</p>
 
-            <form method="POST" action="."> {% csrf_token %}
+            <form method="POST" action=".">
+                {% csrf_token %}
                 {{comment_form|crispy}}
-                <input type="submit" value="Post comment" class="btn btn-secondary" />
+                <input type="submit" value="Post comment" class="btn btn-secondary"/>
             </form>
 
             <hr/>
@@ -45,9 +46,31 @@
                     <footer class="blockquote-footer">via
                         {{comment.user}}
                         |
-                        {{comment.timestamp|timesince}}</footer>
-                </blockquote>
+                        {{comment.timestamp|timesince}}
+                        ago
+                        {% if comment.children.count > 0 %} | {{comment.children.count}} comment {%if comment.children.count > 1 %}s{% endif %} {% endif %} 
+                        | <a class="comment-reply-btn" href="#">Reply</a>
+                    </footer>
 
+                    <div class="comment-reply" style="display: none;">
+                        {% for child_comment in comment.children %}
+                            <blockquote class="blockquote">
+                                <p class="mb-0">{{child_comment.content}}</p>
+                                <footer class="blockquote-footer">via
+                                    {{child_comment.user}}
+                                    |
+                                    {{child_comment.timestamp|timesince}}</footer>
+                            </blockquote>
+                        {% endfor %}
+
+                        <form method="POST" action=".">
+                            {% csrf_token %}
+                            {{comment_form|crispy}}
+                            <input type="hidden" name="parent_id" value="{{ comment.id }}"/>
+                            <input type="submit" value="Reply" class="btn btn-secondary"/>
+                        </form>
+                    </div>
+                </blockquote>
                 <hr/>
             {% endfor %}
         </div>
