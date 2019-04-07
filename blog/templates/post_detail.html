@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 {% block head_title %}
     {{instance.title}}
     |
@@ -9,7 +10,11 @@
     <div class="col-sm-12">
         <img src="{{instance.image.url}}" class="img-responsive"/>
         <h1>{{title}}
-            <small>{% if instance.draft %} <span style="color:red;">Draft</span> {% endif %} {{instance.publish}}</small>
+            <small>
+                {% if instance.draft %}
+                    <span style="color:red;">Draft</span>
+                {% endif %}
+                {{instance.publish}}</small>
         </h1>
         <p>Author:
             {{instance.user}}</p>
@@ -23,18 +28,28 @@
             data-share="true"></div>
         <p class="post-detail-item">{{instance.get_markdown}}</p>
 
-       <br />
-       <br />
-       <div>
-           <p class="lead">Comments</p>
-           {% for comment in comments %}
-                <div class="">
-                    {{comment.content}}
-                    <br />
-                    <small>via {{comment.user}} | {{comment.timestamp|timesince}}</small>
-                    <hr />
-                </div>
-           {% endfor %}
-       </div>
+        <br/>
+        <br/>
+        <div>
+            <p class="lead">Comments</p>
+
+            <form method="POST" action="."> {% csrf_token %}
+                {{comment_form|crispy}}
+                <input type="submit" value="Post comment" class="btn btn-secondary" />
+            </form>
+
+            <hr/>
+            {% for comment in comments %}
+                <blockquote class="blockquote">
+                    <p class="mb-0">{{comment.content}}</p>
+                    <footer class="blockquote-footer">via
+                        {{comment.user}}
+                        |
+                        {{comment.timestamp|timesince}}</footer>
+                </blockquote>
+
+                <hr/>
+            {% endfor %}
+        </div>
     </div>
 {% endblock content %}
