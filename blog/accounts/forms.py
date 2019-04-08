@@ -27,3 +27,40 @@ class UserLoginForm(forms.Form):
             if not user.is_active:
                 raise forms.ValidationError("This user is not longer active.")
         return super(UserLoginForm, self).clean(*args, **kwargs)
+
+class UserRegistrationForm(forms.ModelForm):
+    email= forms.EmailField(label='Email address')
+    email_confirm = forms.EmailField(label='Confirm email')
+    password = forms.CharField(widget=forms.PasswordInput)
+
+    class Meta:
+        model = User
+        fields = [
+            'username',
+            'password',
+            'email',
+            'email_confirm'
+        ]
+
+    def clean(self, *args, **kwargs):
+        email = self.cleaned_data.get('email')
+        email_confirm = self.cleaned_data.get('email_confirm')
+        if email != email_confirm:
+            raise forms.ValidationError("Emails must match")
+        
+        email_qs = User.objects.filter(email=email)
+        if email_qs.exists():
+                raise forms.ValidationError("This email has already been registered")
+        return super(UserRegistrationForm, self).clean(*args, **kwargs)
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        email_confirm = self.cleaned_data.get('email_confirm')
+        if email != email_confirm:
+            raise forms.ValidationError("Emails must match")
+        
+        email_qs = User.objects.filter(email=email)
+        if email_qs.exists():
+                raise forms.ValidationError("This email has already been registered")
+
+        return email
