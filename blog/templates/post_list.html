@@ -58,7 +58,33 @@
             {% endfor %}
         </div>
         <div class="col-sm-4">
-            dasda
+            <div class="card featured-post-card">
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <span class="red-border-bottom">Featured</span>
+                        post</h3>
+                    <hr/>
+                    <div class="featured-post-head">
+                        <p class="title">{{featured_post.title}}</p>
+                        <p class="post-details">
+                            by
+                            <span class="red-color">{{featured_post.user}}</span>
+                            -
+                            {{featured_post.timestamp|date:"D, d M, Y"}}
+                            -
+                            <span class="red-color">{{featured_post.comments.count}}</span>
+                        </p>
+                    </div>
+                    {% if featured_post.image %}
+                        <img src="{{featured_post.image.url}}" class="img-fluid"/>
+                    {% endif %}
+                    <div class="featured-post-content">
+                        <p class="post-content">{{featured_post.get_markdown|truncatewords_html:15}}</p>
+                    </div>
+
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -66,7 +92,9 @@
         {% if object_list.has_previous %}
             <a
                 class="page-button"
-                href="?page={{object_list.previous_page_number}}{% if request.GET.q %}&q={{request.GET.q}}{% endif %}"><i class="fas fa-chevron-left"></i></a>
+                href="?page={{object_list.previous_page_number}}{% if request.GET.q %}&q={{request.GET.q}}{% endif %}">
+                <i class="fas fa-chevron-left"></i>
+            </a>
         {% endif %}
         {% for i in pages_number%}
             <a
@@ -77,7 +105,9 @@
         {% if object_list.has_next %}
             <a
                 class="page-button"
-                href="?page={{object_list.next_page_number}}{% if request.GET.q %}&q={{request.GET.q}}{% endif %}"><i class="fas fa-chevron-right"></i></a>
+                href="?page={{object_list.next_page_number}}{% if request.GET.q %}&q={{request.GET.q}}{% endif %}">
+                <i class="fas fa-chevron-right"></i>
+            </a>
         {% endif %}
     </div>
 

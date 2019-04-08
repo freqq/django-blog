@@ -8,6 +8,7 @@ from comments.models import Comment
 from comments.forms import CommentForm
 from django.contrib.contenttypes.models import ContentType
 from .utils import get_read_time
+import random
 
 from .models import Post
 from .forms import PostForm
@@ -15,6 +16,7 @@ from .forms import PostForm
 def posts_list(request):
     today = timezone.now().date()
     queryset_list = Post.objects.active().order_by("-timestamp")
+    featured_post = queryset_list.order_by('?').first()
     if request.user.is_staff or request.user.is_superuser:
         queryset_list = Post.objects.all().order_by("-timestamp")
 
@@ -36,7 +38,8 @@ def posts_list(request):
         "page_request_var": page_request_var,
         "object_list": queryset,
         "today": today,
-        "pages_number": range(1, queryset.paginator.num_pages+1)
+        "pages_number": range(1, queryset.paginator.num_pages+1),
+        "featured_post": featured_post,
     }
     return render(request, "post_list.html", context)
 
