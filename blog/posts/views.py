@@ -69,7 +69,7 @@ def post_detail(request, slug=None):
             if parent_qs.exists() and parent_qs.count() == 1:
                 parent_obj = parent_qs.first()
 
-        new_comment, created = Comment.objects.get_or_create(
+        new_comment = Comment.objects.get_or_create(
             user = request.user,
             content_type = content_type,
             object_id = obj_id,
@@ -93,8 +93,8 @@ def post_create(request):
     if not request.user.is_staff or not request.user.is_superuser:
         raise Http404
 
-    #if not request.user.is_authenticated():
-    #   raise Http404
+    if not request.user.is_authenticated:
+       raise Http404
 
     form = PostForm(request.POST or None, request.FILES or None)
     if form.is_valid():
