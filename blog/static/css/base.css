@@ -5,3 +5,22 @@ h1{
 .wmd-panel{
     margin: 0 auto !important;
 }
+
+.breadcrumb li {
+    display: inline-block ;
+    margin: 0 2px;
+}
+
+.breadcrumb li::after{
+    content: ' /';
+}
+
+.breadcrumb li:last-child::after{
+    content: ''
+}
+
+.breadcrumb .float-right{
+    background: red !important;
+    clear: both;
+    float: right;
+}

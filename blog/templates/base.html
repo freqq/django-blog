@@ -42,6 +42,26 @@
 
                                 {% include "messages_list.html" %}
                                 <div class="container">
+                                    <nav aria-label="breadcrumb">
+                                        <ol class="breadcrumb">
+                                            <li class="breadcrumb-item">
+                                                <a href="{% url 'list' %}">Home</a>
+                                            </li>
+                                            {% block post_detail_link %}{% endblock %}
+                                            {% if not request.user.is_authenticated %}
+                                                <li class="ml-auto breadcrumb-item">
+                                                    <a href="{% url 'login' %}">Login</a>
+                                                </li>
+                                                <li class="breadcrumb-item">
+                                                    <a href="{% url 'register' %}">Register</a>
+                                                </li>
+                                            {% else %}
+                                                <li class="ml-auto breadcrumb-item">
+                                                    <a href="{% url 'logout' %}">Logout</a>
+                                                </li>
+                                            {% endif %}
+                                        </ol>
+                                    </nav>
                                     {% block content %}{% endblock content %}
                                 </div>
                                 <script
