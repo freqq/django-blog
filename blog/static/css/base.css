@@ -6,21 +6,128 @@ h1{
     margin: 0 auto !important;
 }
 
-.breadcrumb li {
-    display: inline-block ;
-    margin: 0 2px;
+body{
+    background: #f4f4f7 !important;
 }
 
-.breadcrumb li::after{
-    content: ' /';
+header{
+    background: white;
+    text-align: center;
+    font-size: 35px;
+    padding: 80px 0;
+    text-transform: uppercase;
+    font-weight: 200;
+    border-bottom: 2px solid #e8e8e8;
 }
 
-.breadcrumb li:last-child::after{
-    content: ''
+header small {
+    display: block;
+    font-size: 20px;
+    font-weight: 100;
+    margin-top: -10px;
 }
 
-.breadcrumb .float-right{
-    background: red !important;
-    clear: both;
-    float: right;
+.breadcrumb{
+    background: white !important;
+    border: 2px solid #e8e8e8;
+    border-top: none;
+    border-top-right-radius: 0 !important;
+    border-top-left-radius: 0 !important;
+}
+
+.breadcrumb a{
+    color: black;
+}
+
+.no-slash::before{
+    content: '' !important;
+}
+
+.post-details{
+    font-size: 13px;
+    margin: 0 !important;
+    font-style: italic;
+}
+
+.post-title a{
+    color: #1f1f1f;
+}
+
+.post-title a:hover{
+    color: #f0142a;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.red-color{
+    color: #f0142a;
+}
+
+.red-color:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.read-more-button{
+    background: #f0142a !important;
+    border: none !important;
+    outline: none !important;
+    border-radius: 0 !important;
+    font-size: 13px !important;
+    padding: 10px 20px !important;
+}
+
+.card{
+    border-radius: 0 !important;
+}
+
+.post-content, .post-category{
+    color: #7d7d7d;
+    font-size: 12px;
+}
+
+
+.messages-box {
+    text-align: center;
+}
+
+.messages{
+    padding: 0;
+    color: white;
+    font-weight: 100;
+}
+
+.messages li {
+    list-style: none;
+    padding: 20px 0;
+}
+
+.messages .success {
+    background: #50C878;
+}
+
+.page-button{
+    background: white;
+    padding: 5px 12px;
+    color: black;
+    font-weight: 100;
+    transition: 0.3s;
+    border: 1px solid #e8e8e8;
+    margin-right: 5px;
+}
+
+.page-button:hover{
+    text-decoration: none;
+    background: #f0142a;
+    color: white;
+}
+
+.page-button-active{
+    text-decoration: none;
+    background: #f0142a;
+    color: white;
+}
+
+.pagination{
+    margin-bottom: 50px;
 }

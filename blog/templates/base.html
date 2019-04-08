@@ -31,112 +31,121 @@
                         <link rel="stylesheet" href='{% static "css/base.css" %}'>
                             <link
                                 rel="stylesheet"
-                                href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-                                integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+                                href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+                                integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
                                 crossorigin="anonymous">
-                                {% block head_extra %}{% endblock head_extra %}
-                            </head>
+                                <link
+                                    rel="stylesheet"
+                                    href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+                                    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+                                    crossorigin="anonymous">
+                                    {% block head_extra %}{% endblock head_extra %}
+                                </head>
 
-                            <body>
-                                <!--[if lt IE 7]> <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p> <![endif]-->
-
-                                {% include "messages_list.html" %}
-                                <div class="container">
-                                    <nav aria-label="breadcrumb">
-                                        <ol class="breadcrumb">
-                                            <li class="breadcrumb-item">
-                                                <a href="{% url 'list' %}">Home</a>
-                                            </li>
-                                            {% block post_detail_link %}{% endblock %}
-                                            {% if not request.user.is_authenticated %}
-                                                <li class="ml-auto breadcrumb-item">
-                                                    <a href="{% url 'login' %}">Login</a>
-                                                </li>
+                                <body>
+                                    <!--[if lt IE 7]> <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p> <![endif]-->
+                                    <header>
+                                        przemek.com
+                                        <small>blog template</small>
+                                    </header>
+                                    <div class="container">
+                                        <nav aria-label="breadcrumb">
+                                            <ol class="breadcrumb">
                                                 <li class="breadcrumb-item">
-                                                    <a href="{% url 'register' %}">Register</a>
+                                                    <a href="{% url 'list' %}">Home</a>
                                                 </li>
-                                            {% else %}
-                                                <li class="ml-auto breadcrumb-item">
-                                                    <a href="{% url 'logout' %}">Logout</a>
-                                                </li>
-                                            {% endif %}
-                                        </ol>
-                                    </nav>
-                                    {% block content %}{% endblock content %}
-                                </div>
-                                <script
-                                    src="https://code.jquery.com/jquery-3.3.1.js"
-                                    integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-                                    crossorigin="anonymous"></script>
-                                <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.6.2/marked.min.js"></script>
-                                <script
-                                    src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-                                    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-                                    crossorigin="anonymous"></script>
-                                <script
-                                    src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-                                    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-                                    crossorigin="anonymous"></script>
+                                                {% block post_detail_link %}{% endblock %}
+                                                {% if not request.user.is_authenticated %}
+                                                    <li class="ml-auto breadcrumb-item no-slash">
+                                                        <a href="{% url 'login' %}">Login</a>
+                                                    </li>
+                                                    <li class="breadcrumb-item">
+                                                        <a href="{% url 'register' %}">Register</a>
+                                                    </li>
+                                                {% else %}
+                                                    <li class="ml-auto breadcrumb-item no-slash">
+                                                        <a href="{% url 'logout' %}">Logout</a>
+                                                    </li>
+                                                {% endif %}
+                                            </ol>
+                                        </nav>
 
-                                <div id="fb-root"></div>
-                                <script
-                                    async
-                                    defer
-                                    crossorigin="anonymous"
-                                    src="https://connect.facebook.net/pl_PL/sdk.js#xfbml=1&version=v3.2"></script>
-                                <script type="text/javascript">
-                                    $(document)
-                                        .ready(function () {
-                                            $(".content-markdown")
-                                                .each(function () {
-                                                    var content = $(this).text()
-                                                    var markedContent = marked(content)
-                                                    $(this).html(markedContent)
-                                                })
-                                            $(".post-detail-item img").each(function () {
-                                                $(this).addClass("img-fluid")
-                                            })
+                                        {% include "messages_list.html" %}
+                                        {% block content %}{% endblock content %}
+                                    </div>
+                                    <script
+                                        src="https://code.jquery.com/jquery-3.3.1.js"
+                                        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+                                        crossorigin="anonymous"></script>
+                                    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.6.2/marked.min.js"></script>
+                                    <script
+                                        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+                                        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+                                        crossorigin="anonymous"></script>
+                                    <script
+                                        src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+                                        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+                                        crossorigin="anonymous"></script>
 
-                                            var titleItem = $("#id_title")
-                                            $("#preview-title").text(titleItem.val())
-
-                                            var contentItem = $("#id_content")
-                                            $("#preview-content").html(marked(contentItem.val()))
-
-                                            function setContent(value) {
-                                                var markedContent = marked(value)
-                                                $("#preview-content").html(markedContent)
-                                                $("#preview-content img").each(function () {
+                                    <div id="fb-root"></div>
+                                    <script
+                                        async
+                                        defer
+                                        crossorigin="anonymous"
+                                        src="https://connect.facebook.net/pl_PL/sdk.js#xfbml=1&version=v3.2"></script>
+                                    <script type="text/javascript">
+                                        $(document)
+                                            .ready(function () {
+                                                $(".content-markdown")
+                                                    .each(function () {
+                                                        var content = $(this).text()
+                                                        var markedContent = marked(content)
+                                                        $(this).html(markedContent)
+                                                    })
+                                                $(".post-detail-item img").each(function () {
                                                     $(this).addClass("img-fluid")
                                                 })
-                                            }
-                                            setContent(contentItem.val())
 
-                                            contentItem.keyup(function () {
-                                                var newContent = $(this).val()
-                                                setContent(newContent)
+                                                var titleItem = $("#id_title")
+                                                $("#preview-title").text(titleItem.val())
+
+                                                var contentItem = $("#id_content")
+                                                $("#preview-content").html(marked(contentItem.val()))
+
+                                                function setContent(value) {
+                                                    var markedContent = marked(value)
+                                                    $("#preview-content").html(markedContent)
+                                                    $("#preview-content img").each(function () {
+                                                        $(this).addClass("img-fluid")
+                                                    })
+                                                }
+                                                setContent(contentItem.val())
+
+                                                contentItem.keyup(function () {
+                                                    var newContent = $(this).val()
+                                                    setContent(newContent)
+                                                })
+
+                                                function setTitle(value) {
+                                                    $("#preview-title").text(value)
+                                                }
+
+                                                setTitle(titleItem.val())
+
+                                                titleItem.keyup(function () {
+                                                    var newTitle = $(this).val()
+                                                    setTitle(newTitle)
+                                                })
+
+                                                $(".comment-reply-btn").click(function (event) {
+                                                    event.preventDefault();
+                                                    $(this)
+                                                        .parent()
+                                                        .next(".comment-reply")
+                                                        .fadeToggle();
+                                                })
                                             })
+                                    </script>
+                                </body>
 
-                                            function setTitle(value) {
-                                                $("#preview-title").text(value)
-                                            }
-
-                                            setTitle(titleItem.val())
-
-                                            titleItem.keyup(function () {
-                                                var newTitle = $(this).val()
-                                                setTitle(newTitle)
-                                            })
-
-                                            $(".comment-reply-btn").click(function (event) {
-                                                event.preventDefault();
-                                                $(this)
-                                                    .parent()
-                                                    .next(".comment-reply")
-                                                    .fadeToggle();
-                                            })
-                                        })
-                                </script>
-                            </body>
-
-                        </html>
+                            </html>

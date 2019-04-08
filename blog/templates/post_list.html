@@ -1,75 +1,86 @@
 {% extends "base.html" %}
 {% block content %}
-
-    <div class="col-sm-8 offset-sm-2">
-        <h1 class="text-center">{{title}}</h1>
-
-        <form method="GET" action="">
-            <div class="input-group mb-4">
-                <input
-                    class="form-control"
-                    type="text"
-                    name="q"
-                    placeholder="Share posts..."
-                    value="{{request.GET.q}}"/>
-                <span class="input-group-btn">
-                    <input class="btn btn-primary" type="submit" value="Search"/>
-                </span>
-            </div>
-        </form>
-
-        {% for obj in object_list %}
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="card">
-                        <div class="card-body post-detail-item">
-                            {% if obj.image %}
-                                <img src="{{obj.image.url}}" class="img-fluid"/>
+    <div class="row">
+        <div class="col-sm-8">
+            <form method="GET" action="">
+                <div class="input-group mb-4">
+                    <input
+                        class="form-control"
+                        type="text"
+                        name="q"
+                        placeholder="Search posts..."
+                        value="{{request.GET.q}}"/>
+                    <span class="input-group-btn">
+                        <input class="btn btn-secondary" type="submit" value="Search"/>
+                    </span>
+                </div>
+            </form>
+            {% for obj in object_list %}
+                <div class="card">
+                    <div class="card-body post-detail-item">
+                        <h3 class="card-title">
+                            {% if obj.draft %}
+                                <small style="color: red;">Draft</small>
                             {% endif %}
-                            <h3 class="card-title">
-                                {% if obj.draft %}
-                                    <small style="color: red;">Draft</small>
-                                {% endif %}
-                                {% if obj.publish > today %}
-                                    <small>Future Post</small>
-                                {% endif %}
-                                <p>
-                                    <a href="{{ obj.get_absolute_url }}">{{obj.title}}</a> |
-                                    <small>{{obj.timestamp|timesince}}</small>
-                                </p>
-                            </h3>
-                            <p>{{obj.get_markdown|truncatewords_html:9}}</p>
-                            <p class="card-text">
-                                <a href="{{ obj.get_absolute_url }}" class="btn btn-primary" role="button">View</a>
+                            {% if obj.publish > today %}
+                                <small>Future Post</small>
+                            {% endif %}
+                            <p class="post-title">
+                                <a href="{{ obj.get_absolute_url }}">{{obj.title}}</a>
                             </p>
-                        </div>
+                            <p class="post-details">
+                                by
+                                <span class="red-color">{{obj.user}}</span>
+                                -
+                                {{obj.timestamp|date:"D, d M, Y"}}
+                                -
+                                <span class="red-color">{{obj.comments.count}}</span>
+                            </p>
+                        </h3>
+                        {% if obj.image %}
+                            <img src="{{obj.image.url}}" class="img-fluid"/>
+                        {% endif %}
+                        <p class="post-content">{{obj.get_markdown|truncatewords_html:45}}</p>
+                        <hr/>
+                        <p class="card-text">
+                            <span class="post-category">
+                                <i class="far fa-folder-open"></i>
+                                Beauty
+                            </span>
+                            <a
+                                href="{{ obj.get_absolute_url }}"
+                                class="btn btn-primary float-right read-more-button"
+                                role="button">Read more...</a>
+                        </p>
                     </div>
                 </div>
-            </div>
-            <br/>
+                <br/>
+            {% endfor %}
+        </div>
+        <div class="col-sm-4">
+            dasda
+        </div>
+    </div>
 
+    <div class="pagination">
+        {% if object_list.has_previous %}
+            <a
+                class="page-button"
+                href="?page={{object_list.previous_page_number}}{% if request.GET.q %}&q={{request.GET.q}}{% endif %}"><i class="fas fa-chevron-left"></i></a>
+        {% endif %}
+        {% for i in pages_number%}
+            <a
+                href="?page={{i}}{% if request.GET.q %}&q={{request.GET.q}}{% endif %}"
+                class="page-button {% if i == object_list.number %}page-button-active{% endif %}">{{i}}</a>
         {% endfor %}
 
-        <div class="pagination">
-            <span class="step-links">
-                {% if object_list.has_previous %}
-                    <a
-                        href="?page={{object_list.previous_page_number}}{% if request.GET.q %}&q={{request.GET.q}}{% endif %}">previous</a>
-                {% endif %}
-
-                <span class="current">
-                    Page
-                    {{object_list.number}}
-                    of
-                    {{object_list.paginator.num_pages }}
-                </span>
-
-                {% if object_list.has_next %}
-                    <a
-                        href="?page={{object_list.next_page_number}}{% if request.GET.q %}&q={{request.GET.q}}{% endif %}">next</a>
-                {% endif %}
-            </span>
-        </div>
-
+        {% if object_list.has_next %}
+            <a
+                class="page-button"
+                href="?page={{object_list.next_page_number}}{% if request.GET.q %}&q={{request.GET.q}}{% endif %}"><i class="fas fa-chevron-right"></i></a>
+        {% endif %}
     </div>
+
+</div>
+
 {% endblock content %}
